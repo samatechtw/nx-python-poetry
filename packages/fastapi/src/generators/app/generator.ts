@@ -50,6 +50,9 @@ function normalizeOptions(
     projectRoot,
     projectDirectory,
     parsedTags,
+    pgUser: options.pgUser ?? '',
+    pgDb: options.pgDb ?? '',
+    pgPassword: options.pgPassword,
   };
 }
 
@@ -122,5 +125,18 @@ export default async function (host: Tree, options: AppGeneratorSchema) {
   const poetryInstall = runPoetryCommand(projectRoot, 'install');
   const format = runPoetryCommand(projectRoot, 'run', 'black', 'src');
 
-  return runTasksInSerial(poetryInstall, format);
+  const preStart = options.pgDb
+    ? runPoetryCommand(
+        joinPathFragments(projectRoot, 'src'),
+        'run',
+        'python',
+        'pre_start.py'
+      )
+    : () => {
+        console.log(
+          'No database name, skipping initialization. Run "poetry run python pre_start.py" from the src directory'
+        );
+      };
+
+  return runTasksInSerial(poetryInstall, format, preStart);
 }

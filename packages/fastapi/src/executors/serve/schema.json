@@ -1,9 +1,20 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Dev server executor",
-  "description": "",
+  "title": "Dev Server",
+  "description": "Serve the app for development",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "host": {
+      "type": "string",
+      "description": "Dev server hostname",
+      "default": "localhost"
+    },
+    "port": {
+      "type": "number",
+      "description": "Dev server port",
+      "default": 3000
+    }
+  },
   "required": []
 }

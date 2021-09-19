@@ -3,4 +3,7 @@ export interface AppGeneratorSchema {
   title?: string;
   tags?: string;
   directory?: string;
+  pgUser?: string;
+  pgDb?: string;
+  pgPassword: string;
 }

@@ -1,0 +1,77 @@
+{
+  "version": 2,
+  "projects": {
+    "python-poetry": {
+      "root": "packages/python-poetry",
+      "sourceRoot": "packages/python-poetry/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["packages/python-poetry/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/python-poetry"],
+          "options": {
+            "jestConfig": "packages/python-poetry/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/python-poetry",
+            "tsConfig": "packages/python-poetry/tsconfig.lib.json",
+            "packageJson": "packages/python-poetry/package.json",
+            "main": "packages/python-poetry/src/index.ts",
+            "assets": [
+              "packages/python-poetry/*.md",
+              {
+                "input": "./packages/python-poetry/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/python-poetry/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/python-poetry",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/python-poetry",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "python-poetry-e2e": {
+      "root": "e2e/python-poetry-e2e",
+      "projectType": "application",
+      "sourceRoot": "e2e/python-poetry-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "python-poetry:build",
+            "jestConfig": "e2e/python-poetry-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}

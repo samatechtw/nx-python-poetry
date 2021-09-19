@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "python-poetry",
+  "version": "0.0.1",
+  "generators": {
+    "python-poetry": {
+      "factory": "./src/generators/python-poetry/generator",
+      "schema": "./src/generators/python-poetry/schema.json",
+      "description": "python-poetry generator"
+    }
+  }
+}

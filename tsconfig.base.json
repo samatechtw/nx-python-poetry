@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "nx-python-poetry/python-poetry": ["packages/python-poetry/src/index.ts"]
+      "nx-python-poetry/fastapi": ["packages/fastapi/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,23 +1,23 @@
 {
   "version": 2,
   "projects": {
-    "python-poetry": {
-      "root": "packages/python-poetry",
-      "sourceRoot": "packages/python-poetry/src",
+    "fastapi": {
+      "root": "packages/fastapi",
+      "sourceRoot": "packages/fastapi/src",
       "projectType": "library",
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": ["packages/python-poetry/**/*.ts"]
+            "lintFilePatterns": ["packages/fastapi/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/python-poetry"],
+          "outputs": ["coverage/packages/fastapi"],
           "options": {
-            "jestConfig": "packages/python-poetry/jest.config.js",
+            "jestConfig": "packages/fastapi/jest.config.js",
             "passWithNoTests": true
           }
         },
@@ -25,29 +25,29 @@
           "executor": "@nrwl/node:package",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/packages/python-poetry",
-            "tsConfig": "packages/python-poetry/tsconfig.lib.json",
-            "packageJson": "packages/python-poetry/package.json",
-            "main": "packages/python-poetry/src/index.ts",
+            "outputPath": "dist/packages/fastapi",
+            "tsConfig": "packages/fastapi/tsconfig.lib.json",
+            "packageJson": "packages/fastapi/package.json",
+            "main": "packages/fastapi/src/index.ts",
             "assets": [
-              "packages/python-poetry/*.md",
+              "packages/fastapi/*.md",
               {
-                "input": "./packages/python-poetry/src",
+                "input": "./packages/fastapi/src",
                 "glob": "**/!(*.ts)",
                 "output": "./src"
               },
               {
-                "input": "./packages/python-poetry/src",
+                "input": "./packages/fastapi/src",
                 "glob": "**/*.d.ts",
                 "output": "./src"
               },
               {
-                "input": "./packages/python-poetry",
+                "input": "./packages/fastapi",
                 "glob": "generators.json",
                 "output": "."
               },
               {
-                "input": "./packages/python-poetry",
+                "input": "./packages/fastapi",
                 "glob": "executors.json",
                 "output": "."
               }
@@ -56,16 +56,16 @@
         }
       }
     },
-    "python-poetry-e2e": {
-      "root": "e2e/python-poetry-e2e",
+    "fastapi-e2e": {
+      "root": "e2e/fastapi-e2e",
       "projectType": "application",
-      "sourceRoot": "e2e/python-poetry-e2e/src",
+      "sourceRoot": "e2e/fastapi-e2e/src",
       "targets": {
         "e2e": {
           "executor": "@nrwl/nx-plugin:e2e",
           "options": {
-            "target": "python-poetry:build",
-            "jestConfig": "e2e/python-poetry-e2e/jest.config.js"
+            "target": "fastapi:serve",
+            "jestConfig": "e2e/fastapi-e2e/jest.config.js"
           }
         }
       }

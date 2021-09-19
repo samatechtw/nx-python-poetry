@@ -5,15 +5,12 @@ import {
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
-describe('python-poetry e2e', () => {
-  it('should create python-poetry', async () => {
-    const plugin = uniq('python-poetry');
-    ensureNxProject(
-      '@nx-python-poetry/python-poetry',
-      'dist/packages/python-poetry'
-    );
+describe('fastapi e2e', () => {
+  it('should create fastapi', async () => {
+    const plugin = uniq('fastapi');
+    ensureNxProject('@nx-python-poetry/fastapi', 'dist/packages/fastapi');
     await runNxCommandAsync(
-      `generate @nx-python-poetry/python-poetry:python-poetry ${plugin}`
+      `generate @nx-python-poetry/fastapi:fastapi ${plugin}`
     );
 
     const result = await runNxCommandAsync(`build ${plugin}`);
@@ -22,13 +19,10 @@ describe('python-poetry e2e', () => {
 
   describe('--directory', () => {
     it('should create src in the specified directory', async () => {
-      const plugin = uniq('python-poetry');
-      ensureNxProject(
-        '@nx-python-poetry/python-poetry',
-        'dist/packages/python-poetry'
-      );
+      const plugin = uniq('fastapi');
+      ensureNxProject('@nx-python-poetry/fastapi', 'dist/packages/fastapi');
       await runNxCommandAsync(
-        `generate @nx-python-poetry/python-poetry:python-poetry ${plugin} --directory subdir`
+        `generate @nx-python-poetry/fastapi:fastapi ${plugin} --directory subdir`
       );
       expect(() =>
         checkFilesExist(`libs/subdir/${plugin}/src/index.ts`)
@@ -38,13 +32,10 @@ describe('python-poetry e2e', () => {
 
   describe('--tags', () => {
     it('should add tags to nx.json', async () => {
-      const plugin = uniq('python-poetry');
-      ensureNxProject(
-        '@nx-python-poetry/python-poetry',
-        'dist/packages/python-poetry'
-      );
+      const plugin = uniq('fastapi');
+      ensureNxProject('@nx-python-poetry/fastapi', 'dist/packages/fastapi');
       await runNxCommandAsync(
-        `generate @nx-python-poetry/python-poetry:python-poetry ${plugin} --tags e2etag,e2ePackage`
+        `generate @nx-python-poetry/fastapi:fastapi ${plugin} --tags e2etag,e2ePackage`
       );
       const nxJson = readJson('nx.json');
       expect(nxJson.projects[plugin].tags).toEqual(['e2etag', 'e2ePackage']);

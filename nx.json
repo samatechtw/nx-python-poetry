@@ -1,7 +1,7 @@
 {
   "npmScope": "nx-python-poetry",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "implicitDependencies": {
     "package.json": {
@@ -27,12 +27,12 @@
     ]
   },
   "projects": {
-    "python-poetry": {
+    "fastapi": {
       "tags": []
     },
-    "python-poetry-e2e": {
+    "fastapi-e2e": {
       "tags": [],
-      "implicitDependencies": ["python-poetry"]
+      "implicitDependencies": ["fastapi"]
     }
   },
   "workspaceLayout": {

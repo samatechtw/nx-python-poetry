@@ -8,9 +8,9 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
-import { PythonPoetryGeneratorSchema } from './schema';
+import { AppGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends PythonPoetryGeneratorSchema {
+interface NormalizedSchema extends AppGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -19,7 +19,7 @@ interface NormalizedSchema extends PythonPoetryGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: PythonPoetryGeneratorSchema
+  options: AppGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
@@ -57,7 +57,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
 export default async function (
   tree: Tree,
-  options: PythonPoetryGeneratorSchema
+  options: AppGeneratorSchema
 ) {
   const normalizedOptions = normalizeOptions(tree, options);
   addProjectConfiguration(tree, normalizedOptions.projectName, {
@@ -65,8 +65,8 @@ export default async function (
     projectType: 'library',
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
-      build: {
-        executor: '@nx-python-poetry/python-poetry:build',
+      serve: {
+        executor: 'nx-python-poetry:serve',
       },
     },
     tags: normalizedOptions.parsedTags,

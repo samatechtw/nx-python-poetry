@@ -1,4 +1,4 @@
-export interface PythonPoetryGeneratorSchema {
+export interface AppGeneratorSchema {
   name: string;
   tags?: string;
   directory?: string;

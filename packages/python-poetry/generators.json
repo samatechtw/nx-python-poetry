@@ -3,10 +3,10 @@
   "name": "python-poetry",
   "version": "0.0.1",
   "generators": {
-    "python-poetry": {
-      "factory": "./src/generators/python-poetry/generator",
-      "schema": "./src/generators/python-poetry/schema.json",
-      "description": "python-poetry generator"
+    "app": {
+      "factory": "./src/generators/app/generator",
+      "schema": "./src/generators/app/schema.json",
+      "description": "python-poetry app generator"
     }
   }
 }

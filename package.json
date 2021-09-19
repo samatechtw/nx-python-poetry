@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test"
+    "build": "nx build python-poetry",
+    "test": "nx test python-poetry",
+    "lint": "nx workspace-lint && nx lint python-poetry",
+    "e2e": "nx e2e python-poetry"
   },
   "private": true,
   "devDependencies": {

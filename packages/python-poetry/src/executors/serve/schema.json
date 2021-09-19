@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Build executor",
+  "title": "Dev server executor",
   "description": "",
   "type": "object",
   "properties": {},

@@ -1,7 +1,7 @@
-import { DevServerExecutorSchema } from './schema';
+import { FormatExecutorSchema } from './schema';
 import executor from './executor';
 
-const options: DevServerExecutorSchema = {
+const options: FormatExecutorSchema = {
   host: 'localhost',
   port: 3000,
 };

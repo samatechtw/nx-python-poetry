@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Pylint linter",
+  "description": "Lint the app with Pylint",
+  "type": "object",
+  "properties": {},
+  "required": []
+}

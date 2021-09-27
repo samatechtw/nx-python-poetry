@@ -1,7 +1,7 @@
 import { ExecutorContext, joinPathFragments } from '@nrwl/devkit';
 import { DevServerExecutorSchema } from './schema';
 import { getProjectRoot } from '../../utils';
-import { runPoetryCommandAsync } from '../../poetry';
+import { CmdStatus, runPoetryCommandAsync, waitForCommand } from '../../poetry';
 
 export default async function* runExecutor(
   options: DevServerExecutorSchema,
@@ -14,16 +14,27 @@ export default async function* runExecutor(
   const baseUrl = `http://${host}:${port}`;
 
   try {
+    const checkStatus = (data): CmdStatus => {
+      if (data.includes('Application startup complete.')) {
+        return CmdStatus.Done;
+      } else if (data.includes('ERROR:')) {
+        return CmdStatus.Error;
+      }
+      return CmdStatus.Continue;
+    };
     const child = await runPoetryCommandAsync(
       joinPathFragments(projectRoot, 'src'),
-      'run',
-      'uvicorn',
-      'main:app',
-      '--reload',
-      '--port',
-      port.toString(),
-      '--host',
-      host
+      [
+        'run',
+        'uvicorn',
+        'main:app',
+        '--reload',
+        '--port',
+        port.toString(),
+        '--host',
+        host,
+      ],
+      checkStatus
     );
 
     if (!child) {
@@ -34,14 +45,7 @@ export default async function* runExecutor(
       baseUrl,
     };
 
-    return new Promise<{ success: boolean; baseUrl?: string }>((res) => {
-      child.on('exit', (code) => {
-        res({
-          success: code === 0,
-          baseUrl,
-        });
-      });
-    });
+    return waitForCommand(child);
   } catch (e) {
     console.error('Executor failed: ', e);
     return { success: false };

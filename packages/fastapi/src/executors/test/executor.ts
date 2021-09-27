@@ -1,28 +1,28 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { LintExecutorSchema } from './schema';
+import { TestExecutorSchema } from './schema';
 import { getProjectRoot } from '../../utils';
 import { CmdStatus, runPoetryCommandAsync, waitForCommand } from '../../poetry';
 
 export default async function* runExecutor(
-  options: LintExecutorSchema,
+  options: TestExecutorSchema,
   context: ExecutorContext
 ) {
-  console.log('Executor ran for lint', options);
+  console.log('Executor ran for pytest', options);
   const projectRoot = getProjectRoot(context);
 
   try {
-    const lintStatus = (data): CmdStatus => {
-      if (/ F\d+: /.test(data) || data.includes('Your code has been rated')) {
+    const checkStatus = (data): CmdStatus => {
+      if (/============ \d+ passed/.test(data)) {
         return CmdStatus.Done;
-      } else if (/ E\d+: /.test(data)) {
-        return CmdStatus.Error;
+      } else if (/============ \d+ failed/.test(data)) {
+        return CmdStatus.ErrorAndDone;
       }
       return CmdStatus.Continue;
     };
     const child = await runPoetryCommandAsync(
       projectRoot,
-      ['run', 'pylint', 'src'],
-      lintStatus
+      ['run', 'pytest'],
+      checkStatus
     );
 
     if (!child) {
@@ -31,7 +31,7 @@ export default async function* runExecutor(
     yield { success: true };
 
     return waitForCommand(child);
-  } catch (e) {
+  } catch (_e) {
     return { success: false };
   }
 }

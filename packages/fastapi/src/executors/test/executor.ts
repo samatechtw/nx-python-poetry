@@ -14,7 +14,10 @@ export default async function* runExecutor(
     const checkStatus = (data): CmdStatus => {
       if (/============ \d+ passed/.test(data)) {
         return CmdStatus.Done;
-      } else if (/============ \d+ failed/.test(data)) {
+      } else if (
+        /============ \d+ failed/.test(data) ||
+        /============ \d+ errors? in/.test(data)
+      ) {
         return CmdStatus.ErrorAndDone;
       }
       return CmdStatus.Continue;

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "<%= projectTitle %>"
-version = "0.2.1"
+version = "0.1.0"
 description = "A Python FastAPI app"
 authors = ["Author <example@gmail.com"]
 

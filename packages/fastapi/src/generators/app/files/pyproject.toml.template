@@ -2,7 +2,7 @@
 name = "<%= projectTitle %>"
 version = "0.1.0"
 description = "A Python FastAPI app"
-authors = ["Author <example@gmail.com"]
+authors = ["Author <example@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -21,6 +21,7 @@ alembic = "^1.7.3"
 pylint = "*"
 pytest = "*"
 mypy = "*"
+sqlalchemy-stubs = "^0.4"
 black = "21.9b0"
 
 [tool.mypy]
@@ -30,6 +31,7 @@ show_column_numbers = true
 disallow_untyped_defs = true
 no_warn_no_return = true
 plugins = ["sqlmypy"]
+exclude = "migrations"
 
 [tool.black]
 include = '\.py$'

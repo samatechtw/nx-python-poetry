@@ -26,6 +26,7 @@
     "@types/shelljs": "^0.8.9",
     "@typescript-eslint/eslint-plugin": "~4.28.3",
     "@typescript-eslint/parser": "~4.28.3",
+    "chalk": "^4.1.2",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "husky": "^7.0.1",

@@ -18,7 +18,7 @@ requests = "^2.26.0"
 alembic = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
-pylint = "*"
+flake8 = "*"
 pytest = "*"
 mypy = "*"
 sqlalchemy-stubs = "^0.4"

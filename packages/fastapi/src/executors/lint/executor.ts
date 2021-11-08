@@ -3,7 +3,7 @@ import { LintExecutorSchema } from './schema';
 import { getProjectRoot, getWorkspaceRoot } from '../../utils';
 import { runPoetryCommand } from '../../poetry';
 
-export default async function* runExecutor(
+export default function runExecutor(
   options: LintExecutorSchema,
   context: ExecutorContext
 ) {

@@ -1,9 +1,9 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { FormatExecutorSchema } from './schema';
 import { getProjectRoot } from '../../utils';
-import { CmdStatus, runPoetryCommandAsync, waitForCommand } from '../../poetry';
+import { runPoetryCommand } from '../../poetry';
 
-export default async function* runExecutor(
+export default function runExecutor(
   options: FormatExecutorSchema,
   context: ExecutorContext
 ) {
@@ -12,29 +12,21 @@ export default async function* runExecutor(
   const projectRoot = getProjectRoot(context);
 
   try {
-    const checkStatus = (data): CmdStatus => {
-      if (
-        data.includes('files reformatted') ||
-        data.includes('files left unchanged')
-      ) {
-        return CmdStatus.Done;
-      }
-      return CmdStatus.Continue;
-    };
-    const child = await runPoetryCommandAsync(
+    const command = runPoetryCommand(
       projectRoot,
-      ['run', 'black', 'src'],
-      checkStatus
+      'run',
+      'black',
+      'src',
+      '--check'
     );
 
-    if (!child) {
+    if (!command) {
       return { success: false };
     }
-    yield { success: true };
+    command();
 
-    return waitForCommand(child);
+    return { success: true };
   } catch (e) {
-    console.error('Executor failed: ', e);
     return { success: false };
   }
 }

@@ -4,6 +4,12 @@
   "title": "Black formatter",
   "description": "Format the app with Black",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "check": {
+      "type": "boolean",
+      "description": "Check for formatting issues without writing files",
+      "default": false
+    }
+  },
   "required": []
 }

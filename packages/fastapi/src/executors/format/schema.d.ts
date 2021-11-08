@@ -1,2 +1,4 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface FormatExecutorSchema {}
+export interface FormatExecutorSchema {
+  check?: boolean;
+}

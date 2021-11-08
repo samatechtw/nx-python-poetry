@@ -95,3 +95,16 @@ export function runPoetryCommand(
     shell.popd();
   };
 }
+
+// Run a Poetry command immediately. Useful for executors
+export function executePoetryCommand(root: string, ...args: string[]): boolean {
+  const cmd = commandSetup(root, args);
+
+  if (!cmd || shell.exec(cmd).code !== 0) {
+    shell.popd();
+    console.error(`Poetry command failed:\n> ${cmd}`);
+    return false;
+  }
+  shell.popd();
+  return true;
+}

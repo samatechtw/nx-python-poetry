@@ -1,32 +1,28 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { FormatExecutorSchema } from './schema';
 import { getProjectRoot } from '../../utils';
-import { runPoetryCommand } from '../../poetry';
+import { executePoetryCommand } from '../../poetry';
 
-export default function runExecutor(
+export default async function runExecutor(
   options: FormatExecutorSchema,
   context: ExecutorContext
 ) {
   console.log('Executor ran for format', options);
+  const check = options.check ?? false;
 
   const projectRoot = getProjectRoot(context);
 
   try {
-    const command = runPoetryCommand(
-      projectRoot,
-      'run',
-      'black',
-      'src',
-      '--check'
-    );
-
-    if (!command) {
-      return { success: false };
+    const args = ['run', 'black', 'src'];
+    if (check) {
+      args.push('--check');
     }
-    command();
-
-    return { success: true };
+    const success = executePoetryCommand(projectRoot, ...args);
+    if (success) {
+      return { success: true };
+    }
   } catch (e) {
-    return { success: false };
+    console.log('Poetry execute error', e);
   }
+  return { success: false };
 }

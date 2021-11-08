@@ -5,7 +5,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@nrwl/devkit": "^12.9.0",
+    "@nrwl/devkit": "^12.10.0",
     "shelljs": "^0.8.4"
   },
   "repository": {

@@ -15,7 +15,7 @@ export default async function* runExecutor(
   console.log('Executor ran for DevServer', options);
 
   const projectRoot = getProjectRoot(context);
-  const { host, port } = options;
+  const { host, port, migrate } = options;
   const baseUrl = `http://${host}:${port}`;
 
   try {
@@ -27,15 +27,17 @@ export default async function* runExecutor(
       }
       return CmdStatus.Continue;
     };
-    const dbMigrate = executePoetryCommand(
-      joinPathFragments(projectRoot, 'src'),
-      'run',
-      'alembic',
-      'upgrade',
-      'head'
-    );
-    if (!dbMigrate) {
-      return { success: false };
+    if (migrate) {
+      const dbMigrate = executePoetryCommand(
+        joinPathFragments(projectRoot, 'src'),
+        'run',
+        'alembic',
+        'upgrade',
+        'head'
+      );
+      if (!dbMigrate) {
+        return { success: false };
+      }
     }
     const child = await runPoetryCommandAsync(
       joinPathFragments(projectRoot, 'src'),

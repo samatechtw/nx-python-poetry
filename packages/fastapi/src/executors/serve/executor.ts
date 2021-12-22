@@ -1,7 +1,12 @@
 import { ExecutorContext, joinPathFragments } from '@nrwl/devkit';
 import { DevServerExecutorSchema } from './schema';
 import { getProjectRoot } from '../../utils';
-import { CmdStatus, runPoetryCommandAsync, waitForCommand } from '../../poetry';
+import {
+  CmdStatus,
+  runPoetryCommandAsync,
+  waitForCommand,
+  executePoetryCommand,
+} from '../../poetry';
 
 export default async function* runExecutor(
   options: DevServerExecutorSchema,
@@ -22,6 +27,16 @@ export default async function* runExecutor(
       }
       return CmdStatus.Continue;
     };
+    const dbMigrate = executePoetryCommand(
+      joinPathFragments(projectRoot, 'src'),
+      'run',
+      'alembic',
+      'upgrade',
+      'head'
+    );
+    if (!dbMigrate) {
+      return { success: false };
+    }
     const child = await runPoetryCommandAsync(
       joinPathFragments(projectRoot, 'src'),
       [
